@@ -5,13 +5,15 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.sagar.synerzip.data.db.entities.Quote
+import com.sagar.synerzip.data.db.entities.Weather
 
 @Database(
-    entities = [Quote::class],
+    entities = [Weather::class, Quote::class],
     version = 1
 )
 abstract class AppDataBase : RoomDatabase() {
     abstract fun getQuoteDao(): QuoteDao
+    abstract fun getWeatherDao(): WeatherDao
 
     companion object {
 

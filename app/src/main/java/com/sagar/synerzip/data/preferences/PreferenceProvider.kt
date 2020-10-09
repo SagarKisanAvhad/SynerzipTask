@@ -17,7 +17,15 @@ class PreferenceProvider(context: Context) {
         preference.edit().putString(KEY_SAVED_AT, savedAt).apply()
     }
 
+
     fun getSavedAt(): String? = preference.getString(KEY_SAVED_AT, null)
 
+
+    fun saveSavedAt(city: String, savedAt: String) {
+        preference.edit().putString(city, savedAt).apply()
+    }
+
+
+    fun getSavedAt(city: String): String? = preference.getString(city, null)
 
 }
