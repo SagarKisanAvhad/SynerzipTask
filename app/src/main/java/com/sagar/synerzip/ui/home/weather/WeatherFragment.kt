@@ -53,6 +53,9 @@ class WeatherFragment : Fragment(), KodeinAware {
                         it.data?.let { weather ->
                             tvCityValue.text = weather.name
                             tvTempValue.text = weather.temp.toString()
+                            tvMinTempValue.text = weather.tempMin.toString()
+                            tvMaxTempValue.text = weather.tempMax.toString()
+                            tvHumidityValue.text = weather.humidity.toString()
                         }
                     }
                     Status.LOADING -> {

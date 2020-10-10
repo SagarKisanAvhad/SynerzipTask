@@ -23,7 +23,7 @@
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/search_view"
                 android:layout_width="0dp"
-                app:queryHint="Enter city name in lowercase"
+                app:queryHint="Enter City"
                 android:imeOptions="actionSearch"
                 android:inputType="textCapWords"
                 android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
                 android:layout_marginTop="16dp"
                 app:contentPadding="8dp"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="8dp"
+                app:cardBackgroundColor="@color/colorPrimary"
                 app:layout_constraintTop_toBottomOf="@id/search_view">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,8 +61,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="City:"
-                        android:textStyle="bold"
-                        android:textSize="12sp"
+                        android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -71,8 +70,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         tools:text="Mumbai"
-                        android:textStyle="bold"
-                        android:textSize="12sp"
+                        android:textSize="18sp"
                         android:layout_marginStart="8dp"
                         app:layout_constraintStart_toEndOf="@id/tv_city_label"
                         app:layout_constraintBaseline_toBaselineOf="@id/tv_city_label"
@@ -83,8 +81,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Temperature:"
-                        android:textStyle="bold"
-                        android:textSize="12sp"
+                        android:textSize="18sp"
                         android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_city_label" />
@@ -93,12 +90,74 @@
                         android:id="@+id/tv_temp_value"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        tools:text="27 degree"
-                        android:textStyle="bold"
-                        android:textSize="12sp"
+                        tools:text="27"
+                        android:textSize="18sp"
                         android:layout_marginStart="8dp"
                         app:layout_constraintStart_toEndOf="@id/tv_temp_label"
                         app:layout_constraintBaseline_toBaselineOf="@id/tv_temp_label"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_min_temp_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Min Temp:"
+                        android:textSize="18sp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_temp_label" />
+
+                    <TextView
+                        android:id="@+id/tv_min_temp_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="27"
+                        android:textSize="18sp"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintStart_toEndOf="@id/tv_min_temp_label"
+                        app:layout_constraintBaseline_toBaselineOf="@id/tv_min_temp_label"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_max_temp_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Max Temp:"
+                        android:textSize="18sp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_min_temp_label" />
+
+                    <TextView
+                        android:id="@+id/tv_max_temp_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="27"
+                        android:textSize="18sp"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintStart_toEndOf="@id/tv_max_temp_label"
+                        app:layout_constraintBaseline_toBaselineOf="@id/tv_max_temp_label"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_humidity_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Humidity:"
+                        android:textSize="18sp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_max_temp_label" />
+
+                    <TextView
+                        android:id="@+id/tv_humidity_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="27"
+                        android:textSize="18sp"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintStart_toEndOf="@id/tv_humidity_label"
+                        app:layout_constraintBaseline_toBaselineOf="@id/tv_humidity_label"
                         app:layout_constraintEnd_toEndOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

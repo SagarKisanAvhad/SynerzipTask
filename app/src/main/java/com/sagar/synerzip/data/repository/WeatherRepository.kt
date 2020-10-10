@@ -1,7 +1,6 @@
 package com.sagar.synerzip.data.repository
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.sagar.synerzip.data.db.AppDataBase
 import com.sagar.synerzip.data.db.entities.Weather
 import com.sagar.synerzip.data.network.MyApi
@@ -23,15 +22,7 @@ class WeatherRepository(
     private val prefs: PreferenceProvider
 ) : SafeApiRequest() {
 
-    private val weather = MutableLiveData<Weather>()
-    private var interestedCity = ""
 
-    init {
-        weather.observeForever {
-
-        }
-
-    }
 
     private fun saveWeatherOfCity(weather: Weather) {
         Coroutines.io {
@@ -46,15 +37,14 @@ class WeatherRepository(
     }
 
     private suspend fun fetchWeatherForCity(city: String): Weather {
-        interestedCity = city
-        val lastSavedAt = prefs.getSavedAt(interestedCity)
+        val lastSavedAt = prefs.getSavedAt(city)
 
         return if (lastSavedAt == null || isFetchNeeded(lastSavedAt)) {
-            val weatherResponse = apiRequest { api.getWeatherByCity(interestedCity) }
+            val weatherResponse = apiRequest { api.getWeatherByCity(city) }
 
             Log.d("Response", weatherResponse.toString())
 
-            prefs.saveSavedAt(interestedCity, AppDateFormat.df_Date.format(Date()))
+            prefs.saveSavedAt(city, AppDateFormat.df_Date.format(Date()))
             saveWeatherOfCity(weatherResponse.mapToWeather())
             weatherResponse.mapToWeather()
         } else {
