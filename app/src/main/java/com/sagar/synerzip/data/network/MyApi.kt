@@ -30,7 +30,7 @@ interface MyApi {
 
             return Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl("api.openweathermap.org/data/2.5/")
+                .baseUrl("https://api.openweathermap.org/data/2.5/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(MyApi::class.java)

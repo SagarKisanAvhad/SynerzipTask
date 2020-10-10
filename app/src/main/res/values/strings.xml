@@ -7,4 +7,5 @@
     <string name="add_to_card">ADD TO CARD</string>
     <string name="downloads">DOWNLOADS</string>
     <string name="user_sessions">USER SESSIONS</string>
+    <string name="button_label_submit">Submit</string>
 </resources>
