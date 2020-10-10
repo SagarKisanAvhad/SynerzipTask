@@ -1,6 +1,5 @@
 package com.sagar.synerzip.data.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -14,5 +13,5 @@ interface WeatherDao {
     fun insertWeather(weather: Weather)
 
     @Query("SELECT * FROM weather WHERE name = :city")
-    fun getWeatherForCity(city: String): LiveData<Weather>
+    fun getWeatherForCity(city: String): Weather
 }

@@ -8,8 +8,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.sagar.synerzip.R
 import com.sagar.synerzip.databinding.WeatherFragmentBinding
+import com.sagar.synerzip.util.Status
+import com.sagar.synerzip.util.toast
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
@@ -25,7 +28,6 @@ class WeatherFragment : Fragment(), KodeinAware {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding =
             DataBindingUtil.inflate(inflater, R.layout.weather_fragment, container, false)
         binding.viewmodel = viewModel
@@ -40,7 +42,32 @@ class WeatherFragment : Fragment(), KodeinAware {
     private fun bindUi() {
         binding.btnSubmit.setOnClickListener {
             Log.d("on submit click", binding.searchView.query.toString())
+            viewModel.getWeatherForCity(binding.searchView.query.toString())
         }
+
+        viewModel.getWeatherLiveData().observe(viewLifecycleOwner, Observer {
+            binding.apply {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        progressBar.visibility = View.GONE
+                        it.data?.let { weather ->
+                            tvCityValue.text = weather.name
+                            tvTempValue.text = weather.temp.toString()
+                        }
+                    }
+                    Status.LOADING -> {
+                        progressBar.visibility = View.VISIBLE
+                    }
+                    Status.ERROR -> {
+                        //Handle Error
+                        progressBar.visibility = View.GONE
+                        it.message?.let { msg -> requireContext().toast(msg) }
+                    }
+                }
+
+
+            }
+        })
     }
 
 }

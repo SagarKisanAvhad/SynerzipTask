@@ -1,6 +1,6 @@
 package com.sagar.synerzip.data.repository
 
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.sagar.synerzip.data.db.AppDataBase
 import com.sagar.synerzip.data.db.entities.Weather
@@ -10,8 +10,8 @@ import com.sagar.synerzip.data.network.responses.mapToWeather
 import com.sagar.synerzip.data.preferences.PreferenceProvider
 import com.sagar.synerzip.util.AppDateFormat
 import com.sagar.synerzip.util.Coroutines
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -28,8 +28,7 @@ class WeatherRepository(
 
     init {
         weather.observeForever {
-            prefs.saveSavedAt(interestedCity, AppDateFormat.df_Date.format(Date()))
-            saveWeatherOfCity(it)
+
         }
 
     }
@@ -40,10 +39,10 @@ class WeatherRepository(
         }
     }
 
-    suspend fun getWeatherForCity(city: String): LiveData<Weather> {
-        return withContext(Dispatchers.IO) {
+    fun getWeatherForCity(city: String): Flow<Weather> {
+        return flow {
             fetchWeatherForCity(city)
-            db.getWeatherDao().getWeatherForCity(city)
+            emit(db.getWeatherDao().getWeatherForCity(city))
         }
     }
 
@@ -53,7 +52,11 @@ class WeatherRepository(
 
         if (lastSavedAt == null || isFetchNeeded(lastSavedAt)) {
             val weatherResponse = apiRequest { api.getWeatherByCity(interestedCity) }
-            weather.postValue(weatherResponse.mapToWeather())
+
+            Log.d("Response", weatherResponse.toString())
+
+            prefs.saveSavedAt(interestedCity, AppDateFormat.df_Date.format(Date()))
+            saveWeatherOfCity(weatherResponse.mapToWeather())
         }
     }
 
