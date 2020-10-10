@@ -41,22 +41,24 @@ class WeatherRepository(
 
     fun getWeatherForCity(city: String): Flow<Weather> {
         return flow {
-            fetchWeatherForCity(city)
-            emit(db.getWeatherDao().getWeatherForCity(city))
+            emit(fetchWeatherForCity(city))
         }
     }
 
-    private suspend fun fetchWeatherForCity(city: String) {
+    private suspend fun fetchWeatherForCity(city: String): Weather {
         interestedCity = city
         val lastSavedAt = prefs.getSavedAt(interestedCity)
 
-        if (lastSavedAt == null || isFetchNeeded(lastSavedAt)) {
+        return if (lastSavedAt == null || isFetchNeeded(lastSavedAt)) {
             val weatherResponse = apiRequest { api.getWeatherByCity(interestedCity) }
 
             Log.d("Response", weatherResponse.toString())
 
             prefs.saveSavedAt(interestedCity, AppDateFormat.df_Date.format(Date()))
             saveWeatherOfCity(weatherResponse.mapToWeather())
+            weatherResponse.mapToWeather()
+        } else {
+            db.getWeatherDao().getWeatherForCity(city)
         }
     }
 
